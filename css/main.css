@@ -1,0 +1,65 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* NAV STYLES ============================= */
+nav {
+  position: fixed;
+}
+nav ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  background-color: rgba(56, 55, 62, 0.7);
+  list-style: none;
+}
+nav ul li {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 1.2em 1.4em;
+  margin: 0 2px 0 0;
+}
+nav ul li a {
+  color: #4c5054;
+  text-decoration: none;
+  font-family: "Lato", sans-serif;
+}
+
+/* SECTION STYLES ============================= */
+main .contentBox {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+main .contentBox h2 {
+  font-size: 5em;
+  font-family: "Bungee Shade", sans-serif;
+}
+main .contentBox p {
+  margin: 0;
+  font-size: 3em;
+  font-weight: 300;
+  font-family: "Roboto Condensed", sans-serif;
+}
+main .contentBox.box1 {
+  background-color: #c8e486;
+}
+main .contentBox.box2 {
+  background-color: #a4dee4;
+}
+main .contentBox.box3 {
+  background-color: #e8ab5c;
+}
+main .contentBox.box4 {
+  background-color: #ccbede;
+}
+
+/*# sourceMappingURL=main.css.map */

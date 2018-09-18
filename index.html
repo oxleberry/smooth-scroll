@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>smooth scroll</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Lato|Raleway|Bungee+Shade|Roboto+Condensed:300|Sacramento" rel="stylesheet">
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+
+  <!-- Oxle Favicon -->
+  <link rel="icon" type="image/png" href="http://www.oxleberry.com/all/oxleFavicon.png">
+  <!-- My CSS styles -->
+  <link rel="stylesheet" href="css/main.css">
+
+  <!-- My JS files -->
+  <script src="app/app.js" defer></script>
+
+</head>
+<body>
+
+  <header>
+    <nav>
+      <ul>
+        <li>
+          <a href="#"
+            onclick="return false;"
+            onmousedown="resetScroller('home')">
+            Home</a>
+        </li>
+        <!-- on the autoScrollTo function
+        pass in the id of the section to scroll to -->
+        <li>
+          <a href="#oakland"
+            onclick="return false;"
+            onmousedown="autoScrollTo('oakland')">
+            Oakland</a>
+        </li>
+        <li>
+          <a href="#sf"
+            onclick="return false;"
+            onmousedown="autoScrollTo('sf')">
+            San Francisco</a>
+        </li>
+        <li>
+          <a href="#sj"
+            onclick="return false;"
+            onmousedown="autoScrollTo('sj')">
+            San Jose</a>
+        </li>
+        <li>
+          <a href="#ny"
+            onclick="return false;"
+            onmousedown="autoScrollTo('ny')">
+            New York</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="home">
+    <section id="oakland" class='contentBox box1'>
+      <p>11:30am</p>
+      <h2>oakland</h2>
+      <p>80 degrees</p>
+    </section>
+    <section id="sf" class='contentBox box2'>
+      <p>11:30am</p>
+      <h2>san francisco</h2>
+      <p>72 degrees</p>
+    </section>
+    <section id="sj" class='contentBox box3'>
+      <p>11:30am</p>
+      <h2>san jose</h2>
+      <p>87 degrees</p>
+    </section>
+    <section id="ny" class='contentBox box4'>
+      <p>2:30pm</p>
+      <h2>new york</h2>
+      <p>55 degrees</p>
+    </section>
+  </main>
+
+</body>
+</html>
