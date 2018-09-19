@@ -1,6 +1,6 @@
 
 // adapted from https://www.youtube.com/watch?v=b0tnynJtm18&t=1273s
-
+//
 const distance = 60;
 const speed = 24;
 // scrollY is a updated Y value, after scroll animation has occured
@@ -37,8 +37,8 @@ autoScrollTo = (ele) => {
   console.log(targetY);
 
   // updated y position after animation
-  console.log('scrollY');
-  console.log(scrollY);
+  // console.log('scrollY');
+  // console.log(scrollY);
 
   // recursively keeps rendering the scroll animation
   animator = setTimeout(`autoScrollTo('${ele}')`, speed);
@@ -76,3 +76,18 @@ autoScrollTo = (ele) => {
     }
   }
 } // end of autoScrollTo
+
+
+// EVENT LISTENERS
+
+const scrollLinks = document.querySelectorAll(".scrollLink");
+
+scrollLinks.forEach((scrollLink, idx) => {
+  scrollLink.addEventListener("click", function(e) {
+    e.preventDefault();
+    let scrollTarget = scrollLink.dataset.scroll;
+    console.log('scrollTarget');
+    console.log(scrollTarget);
+    autoScrollTo(scrollTarget);
+  });
+});
