@@ -11,8 +11,8 @@ let prevTargetY = 0;
 // for myself:
 // info to find the current display height in pixels
 let displayHeight = window.innerHeight;
-console.log('DISPLAYHEIGHT');
-console.log(displayHeight);
+// console.log('DISPLAYHEIGHT');
+// console.log(displayHeight);
 
 // check for if scroll animation status
 let animatorID = false;
@@ -22,50 +22,69 @@ function renderTime() {
   // renders PST
   let pacificTime = new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"})
   console.log(pacificTime);
+  // formats PST time
+  pacArray = pacificTime.split(' ');
+  pacTime = pacArray[1].slice(0, -3);
+  console.log(pacTime);
+  console.log(pacArray[2]);
+  pacArray[2] = pacArray[2].toLowerCase();
+  pacClock = `${pacTime} ${pacArray[2]}`
+  console.log(pacClock);
+
   // renders EST
-  let eastTime = new Date().toLocaleString("en-US", {timeZone: "America/New_York"})
-  console.log(eastTime);
-
-  // splice after space
-  // splice backwards, omitting 3-6
-
-  // renders local time
-  let localDate = new Date()
-  let localHour = localDate.getHours()
-  let eastHour = localHour + 3;
-  let localMinutes = localDate.getMinutes()
-  let localAmpm = 'am';
-  let eastAmpm = 'am';
-
-  console.log(localDate);
-  console.log(localMinutes);
-
-  // formats the minutes
-  if (localMinutes < 10) {
-    localMinutes = `0${localMinutes}`
-  }
-  // hour of PST
-  if (localHour > 12) {
-    localHour -= 12;
-    localAmpm = 'pm';
-  }
-  // hour of EST
-  console.log(eastHour);
-  if (eastHour >= 24) {
-    eastHour -= 12;
-    eastAmpm = 'am';
-  } else if (eastHour > 12) {
-    eastHour -= 12;
-    eastAmpm = 'pm';
-  }
+  let easternTime = new Date().toLocaleString("en-US", {timeZone: "America/New_York"})
+  // formats PST time
+  eastArray = easternTime.split(' ');
+  eastTime = eastArray[1].slice(0, -3);
+  eastArray[2] = eastArray[2].toLowerCase();
+  eastClock = `${eastTime} ${eastArray[2]}`
 
   // updates the time in the DOM
-  let localTimes = document.querySelectorAll('.localTime');
-  localTimes.forEach(localTime => {
-    localTime.textContent = `${localHour}:${localMinutes}${localAmpm}`;
+  let pacTimeEles = document.querySelectorAll('.pacTime');
+  pacTimeEles.forEach(pacTimeEl => {
+    pacTimeEl.textContent = pacClock;
   });
-  let eastTime2 = document.querySelector('.eastTime');
-  eastTime2.textContent = `${eastHour}:${localMinutes}${eastAmpm}`;
+  let eastTimeEle = document.querySelector('.eastTime');
+  eastTimeEle.textContent = eastClock;
+
+
+  // // renders local time
+  // let localDate = new Date()
+  // let localHour = localDate.getHours()
+  // let eastHour = localHour + 3;
+  // let localMinutes = localDate.getMinutes()
+  // let localAmpm = 'am';
+  // let eastAmpm = 'am';
+  //
+  // console.log(localDate);
+  // console.log(localMinutes);
+
+  // // formats the minutes
+  // if (localMinutes < 10) {
+  //   localMinutes = `0${localMinutes}`
+  // }
+  // // hour of PST
+  // if (localHour > 12) {
+  //   localHour -= 12;
+  //   localAmpm = 'pm';
+  // }
+  // // hour of EST
+  // console.log(eastHour);
+  // if (eastHour >= 24) {
+  //   eastHour -= 12;
+  //   eastAmpm = 'am';
+  // } else if (eastHour > 12) {
+  //   eastHour -= 12;
+  //   eastAmpm = 'pm';
+  // }
+
+  // updates the time in the DOM
+  // let localTimes = document.querySelectorAll('.localTime');
+  // localTimes.forEach(localTime => {
+  //   localTime.textContent = `${localHour}:${localMinutes}${localAmpm}`;
+  // });
+  // let eastTime2 = document.querySelector('.eastTime');
+  // eastTime2.textContent = `${eastHour}:${localMinutes}${eastAmpm}`;
 
 }
 
