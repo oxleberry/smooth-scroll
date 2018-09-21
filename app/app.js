@@ -5,51 +5,58 @@
 // http://www.gizma.com/easing/
 
 function renderTime() {
-  // renders PST
-  let pacificTime = new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"})
-  // console.log(pacificTime);
-  // formats PST time
-  pacArray = pacificTime.split(' ');
-  pacTime = pacArray[1].slice(0, -3);
-  // console.log(pacTime);
-  // console.log(pacArray[2]);
-  pacArray[2] = pacArray[2].toLowerCase();
-  pacClock = `${pacTime} ${pacArray[2]}`
-  // console.log(pacClock);
-
-  // renders EST
-  let easternTime = new Date().toLocaleString("en-US", {timeZone: "America/New_York"})
-  // formats PST time
-  eastArray = easternTime.split(' ');
-  eastTime = eastArray[1].slice(0, -3);
-  eastArray[2] = eastArray[2].toLowerCase();
-  eastClock = `${eastTime} ${eastArray[2]}`
-
+  // gets and renders PST
+  const pacificTime = new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"})
+  const pacClock = formattedTime(pacificTime);
+  // gets and renders EST
+  const easternTime = new Date().toLocaleString("en-US", {timeZone: "America/New_York"})
+  const eastClock = formattedTime(easternTime);
+  // gets and renders Hong Kong Time
+  const hkTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Shanghai"})
+  const hkClock = formattedTime(hkTime);
+  // gets and renders Sydney Time
+  const sydTime = new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"})
+  const sydClock = formattedTime(sydTime);
   // updates the time in the DOM
-  let pacTimeEles = document.querySelectorAll('.pacTime');
+  const pacTimeEles = document.querySelectorAll('.pacTime');
   pacTimeEles.forEach(pacTimeEl => {
     pacTimeEl.textContent = pacClock;
   });
-  let eastTimeEle = document.querySelector('.eastTime');
+  const eastTimeEle = document.querySelector('.eastTime');
   eastTimeEle.textContent = eastClock;
+  const hkTimeEle = document.querySelector('.hkTime');
+  hkTimeEle.textContent = hkClock;
+  const sydTimeEle = document.querySelector('.sydTime');
+  sydTimeEle.textContent = sydClock;
 }
+
+formattedTime = (timeStr) => {
+  timeArray = timeStr.split(' ');
+  timeArray[1] = timeArray[1].slice(0, -3);
+  timeArray[2] = timeArray[2].toLowerCase();
+  result = `${timeArray[1]} ${timeArray[2]}`;
+  return result;
+}
+
+// renders all the times on the page
 renderTime();
 
-
 function renderWeather() {
-  // by one city name
+  // grabs data by one city name
   // let weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?q=';
-  // by up to 20 city ids
+  // grab data by up to 20 city ids
   const weatherUrl = 'http://api.openweathermap.org/data/2.5/group?id=';
   const units = '&units=imperial&appid=';
-  const key = 'SECRET_KEY';
+  const key = 'e1d85f466cbdf227085ec76920be7513';
 
   const oakId = 5378538;
-  const sfId = 5391997;
+  const sfId = 5391959;
   const sjId = 5392171;
   const nycId = 5125771;
+  const hkId = 1819729;
+  const sydId = 6619279;
 
-  cities = `${oakId},${sfId},${sjId},${nycId}`
+  cities = `${oakId},${sfId},${sjId},${nycId},${hkId},${sydId}`
   const path = `${weatherUrl}${cities}${units}${key}`;
 
   $.ajax({
@@ -60,35 +67,26 @@ function renderWeather() {
   });
 
   function onSuccess(res) {
-    console.log(res);
-    const oakWeatherEle = document.querySelector('.oakWeather');
-    const oakDescEle = document.querySelector('.oakDesc');
-    const sfWeatherEle = document.querySelector('.sfWeather');
-    const sfDescEle = document.querySelector('.sfDesc');
-    const sjWeatherEle = document.querySelector('.sjWeather');
-    const sjDescEle = document.querySelector('.sjDesc');
-    const nycWeatherEle = document.querySelector('.nycWeather');
-    const nycDescEle = document.querySelector('.nycDesc');
-    let temp = res.list[0].main.temp;
-    // console.log(temp);
-    let tempRound = Math.round(temp);
-    // console.log(tempRound);
-    oakWeatherEle.textContent = `${tempRound} degrees`;
-    oakDescEle.textContent = `${res.list[0].weather[0].description}`;
-    sfWeatherEle.textContent = `${res.list[1].main.temp} degrees`;
-    sfDescEle.textContent = `${res.list[1].weather[0].description}`;
-    sjWeatherEle.textContent = `${res.list[2].main.temp} degrees`;
-    sjDescEle.textContent = `${res.list[2].weather[0].description}`;
-    nycWeatherEle.textContent = `${res.list[3].main.temp} degrees`;
-    nycDescEle.textContent = `${res.list[3].weather[0].description}`;
+    // console.log(res);
+    const weatherDegEles = document.querySelectorAll('.weatherDeg');
+    const weatherDescEles = document.querySelectorAll('.weatherDesc');
+
+    weatherDegEles.forEach((ele, idx) => {
+      let temp = res.list[idx].main.temp;
+      let tempRound = Math.round(temp);
+      let desc = res.list[idx].weather[0].description;
+      ele.textContent = `${tempRound} degrees`;
+      weatherDescEles[idx].textContent = desc;
+    });
   }
+
   function onError(xhr, status, errorThrown) {
     console.log('Error: ' + errorThrown);
     console.log('Status: ' + status);
     console.dir(xhr);
   }
 
-}
+} // end of renderWeather
 
 renderWeather();
 

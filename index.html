@@ -25,13 +25,8 @@
   <header>
     <nav>
       <ul>
-        <!-- <li>
-          <a href="#home"
-            onclick="return false;"
-            onmousedown="autoScrollTo('home')">
-            Home</a>
-        </li> -->
-        <!-- on the autoScrollTo function
+
+        <!-- on the smoothScroll function
         pass in the id of the section to scroll to -->
         <li>
           <a href="#oakland"
@@ -52,10 +47,22 @@
             San Jose</a>
         </li>
         <li>
-          <a href="#ny"
+          <a href="#nyc"
             class="scrollLink"
-            data-scroll="ny">
+            data-scroll="nyc">
             New York</a>
+        </li>
+        <li>
+          <a href="#hk"
+            class="scrollLink"
+            data-scroll="hk">
+            Hong Kong</a>
+        </li>
+        <li>
+          <a href="#syd"
+            class="scrollLink"
+            data-scroll="syd">
+            Sydney</a>
         </li>
         <!-- <li>
           <a href="#ny"
@@ -71,26 +78,38 @@
     <section id="oak" class='contentBox box1'>
       <p class="pacTime"></p>
       <h2>oakland</h2>
-      <p class="oakWeather"></p>
-      <p class="oakDesc"></p>
+      <p class="weatherDeg"></p>
+      <p class="weatherDesc"></p>
     </section>
     <section id="sf" class='contentBox box2'>
       <p class="pacTime"></p>
       <h2>san francisco</h2>
-      <p class="sfWeather"></p>
-      <p class="sfDesc"></p>
+      <p class="weatherDeg"></p>
+      <p class="weatherDesc"></p>
     </section>
     <section id="sj" class='contentBox box3'>
       <p class="pacTime"></p>
       <h2>san jose</h2>
-      <p class="sjWeather"></p>
-      <p class="sjDesc"></p>
+      <p class="weatherDeg"></p>
+      <p class="weatherDesc"></p>
     </section>
-    <section id="ny" class='contentBox box4'>
+    <section id="nyc" class='contentBox box4'>
       <p class="eastTime"></p>
       <h2>new york</h2>
-      <p class="nycWeather"></p>
-      <p class="nycDesc"></p>
+      <p class="weatherDeg"></p>
+      <p class="weatherDesc"></p>
+    </section>
+    <section id="hk" class='contentBox box1'>
+      <p class="hkTime"></p>
+      <h2>hong kong</h2>
+      <p class="weatherDeg"></p>
+      <p class="weatherDesc"></p>
+    </section>
+    <section id="syd" class='contentBox box2'>
+      <p class="sydTime"></p>
+      <h2>sydney</h2>
+      <p class="weatherDeg"></p>
+      <p class="weatherDesc"></p>
     </section>
   </main>
 
