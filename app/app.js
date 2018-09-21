@@ -35,7 +35,65 @@ function renderTime() {
 }
 renderTime();
 
+
+function renderWeather() {
+  // by one city name
+  // let weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?q=';
+  // by up to 20 city ids
+  const weatherUrl = 'http://api.openweathermap.org/data/2.5/group?id=';
+  const units = '&units=imperial&appid=';
+  const key = 'SECRET_KEY';
+
+  const oakId = 5378538;
+  const sfId = 5391997;
+  const sjId = 5392171;
+  const nycId = 5125771;
+
+  cities = `${oakId},${sfId},${sjId},${nycId}`
+  const path = `${weatherUrl}${cities}${units}${key}`;
+
+  $.ajax({
+    method: 'GET',
+    url: path,
+    success: onSuccess,
+    error: onError
+  });
+
+  function onSuccess(res) {
+    console.log(res);
+    const oakWeatherEle = document.querySelector('.oakWeather');
+    const oakDescEle = document.querySelector('.oakDesc');
+    const sfWeatherEle = document.querySelector('.sfWeather');
+    const sfDescEle = document.querySelector('.sfDesc');
+    const sjWeatherEle = document.querySelector('.sjWeather');
+    const sjDescEle = document.querySelector('.sjDesc');
+    const nycWeatherEle = document.querySelector('.nycWeather');
+    const nycDescEle = document.querySelector('.nycDesc');
+    let temp = res.list[0].main.temp;
+    // console.log(temp);
+    let tempRound = Math.round(temp);
+    // console.log(tempRound);
+    oakWeatherEle.textContent = `${tempRound} degrees`;
+    oakDescEle.textContent = `${res.list[0].weather[0].description}`;
+    sfWeatherEle.textContent = `${res.list[1].main.temp} degrees`;
+    sfDescEle.textContent = `${res.list[1].weather[0].description}`;
+    sjWeatherEle.textContent = `${res.list[2].main.temp} degrees`;
+    sjDescEle.textContent = `${res.list[2].weather[0].description}`;
+    nycWeatherEle.textContent = `${res.list[3].main.temp} degrees`;
+    nycDescEle.textContent = `${res.list[3].weather[0].description}`;
+  }
+  function onError(xhr, status, errorThrown) {
+    console.log('Error: ' + errorThrown);
+    console.log('Status: ' + status);
+    console.dir(xhr);
+  }
+
+}
+
+renderWeather();
+
 function smoothScroll(target, duration) {
+  // renderWeather();
   console.log('TARGET !!!');
   console.log(target);
   console.log(typeof target);
@@ -48,11 +106,11 @@ function smoothScroll(target, duration) {
   console.log('targetYPos');
   console.log(targetYPos);
   // same as .offsetTop
-  // var targetYPos2 = target.getBoundingClientRect().top;
+  // let targetYPos2 = target.getBoundingClientRect().top;
   // console.log(targetYPos2);
 
   // getBoundingClientRect will also get info like .width, .height, .left ...
-  // var targetYPos3 = target.getBoundingClientRect();
+  // let targetYPos3 = target.getBoundingClientRect();
   // console.log(targetYPos3);
 
   // very top of the page
@@ -113,12 +171,8 @@ function smoothScroll(target, duration) {
 
   let animationID = requestAnimationFrame(animation);
 }
-
-
 // EVENT LISTENERS
-
 const scrollLinks = document.querySelectorAll(".scrollLink");
-
 scrollLinks.forEach(scrollLink => {
   scrollLink.addEventListener("click", function(e) {
     e.preventDefault();
