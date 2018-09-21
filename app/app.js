@@ -35,13 +35,15 @@ function renderTime() {
 }
 renderTime();
 
-
 function smoothScroll(target, duration) {
-  // console.log(target);
+  console.log('TARGET !!!');
+  console.log(target);
+  console.log(typeof target);
   // selecting the target element
-  target = document.querySelector(target);
+  target = document.getElementById(target);
   console.log('target');
   console.log(target);
+  console.log(typeof target);
   let targetYPos = target.offsetTop;
   console.log('targetYPos');
   console.log(targetYPos);
@@ -89,6 +91,7 @@ function smoothScroll(target, duration) {
 
     // scrollTo, first argument scrolls on the x axis
     // scrollTo, second argument scrolls on the y axis
+    // animates till we reach the duration time
     window.scrollTo(0, run)
     if (timeElapsed < duration) {
       requestAnimationFrame(animation);
@@ -111,9 +114,18 @@ function smoothScroll(target, duration) {
   let animationID = requestAnimationFrame(animation);
 }
 
-var scrollLink = document.querySelector('.scrollLink');
 
-scrollLink.addEventListener("click", function(e) {
-  e.preventDefault();
-  smoothScroll('#ny', 1500);
+// EVENT LISTENERS
+
+const scrollLinks = document.querySelectorAll(".scrollLink");
+
+scrollLinks.forEach(scrollLink => {
+  scrollLink.addEventListener("click", function(e) {
+    e.preventDefault();
+    let scrollTarget = scrollLink.dataset.scroll;
+    console.log('scrollTarget');
+    console.log(scrollTarget);
+    console.log(typeof scrollTarget);
+    smoothScroll(scrollTarget, 1500);
+  });
 });

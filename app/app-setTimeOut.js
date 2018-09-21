@@ -76,10 +76,6 @@ autoScrollTo = (targetDiv) => {
   // console.log(scrollY);
 
   // recursively keeps rendering the scroll animation
-  // animatorID = setTimeout(`autoScrollTo('${ele}')`, speed);
-  // animatorID = setTimeout(autoScrollTo(ele), speed);
-  // animatorID = setTimeout(`autoScrollTo('${ele}')`, speed);
-
   animatorID = setTimeout(`autoScrollTo('${targetDiv}')`, speed);
 
   // check to see the new target is below previous target, then scroll down
