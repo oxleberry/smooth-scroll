@@ -4,10 +4,6 @@
 // easing
 // http://www.gizma.com/easing/
 
-// to loop through an object
-// for(var i in user){
-//}
-
 renderTime = () => {
   // gets and renders PST
   const pacificTime = new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"})
@@ -38,7 +34,6 @@ renderTime = () => {
 
 formattedTime = (timeStr) => {
   timeArray = timeStr.split(' ');
-  // timeArray[0] = timeArray[0].slice(0, -6);
   timeArray[1] = timeArray[1].slice(0, -3);
   timeArray[2] = timeArray[2].toLowerCase();
   result = `${timeArray[1]} ${timeArray[2]}`;
@@ -60,36 +55,36 @@ renderWeather = () => {
   const hkId = 1819729;
   const sydId = 6619279;
 
-  const cities = `${oakId},${sfId},${sjId},${nycId},${hkId},${sydId}`
+  cities = `${oakId},${sfId},${sjId},${nycId},${hkId},${sydId}`
   const path = `${weatherUrl}${cities}${units}${key}`;
 
-  // create a XHR object
-  const xhr = new XMLHttpRequest();
-  // OPEN - type, url/file, async
-  xhr.open('GET', path, true);
+  $.ajax({
+    method: 'GET',
+    url: path,
+    success: onSuccess,
+    error: onError
+  });
 
-  xhr.onload = function(){
-    if (xhr.status >= 200 && xhr.status < 300) {
-      // console.log(xhr.responseText);
-      // formats to JSON structure
-      const res = JSON.parse(xhr.responseText);
-      // console.log(res);
-      // loops through weather data and renders the output
-      const weatherDegEles = document.querySelectorAll('.weatherDeg');
-      const weatherDescEles = document.querySelectorAll('.weatherDesc');
-      weatherDegEles.forEach((ele, idx) => {
-        let temp = res.list[idx].main.temp;
-        let tempRound = Math.round(temp);
-        let desc = res.list[idx].weather[0].description;
-        ele.textContent = `${tempRound} degrees`;
-        weatherDescEles[idx].textContent = desc;
-      });
-    } else {
-      console.log('request has failed');
-      console.log(xhr.status);
-    }
+  function onSuccess(res) {
+    // console.log(res);
+    const weatherDegEles = document.querySelectorAll('.weatherDeg');
+    const weatherDescEles = document.querySelectorAll('.weatherDesc');
+
+    weatherDegEles.forEach((ele, idx) => {
+      let temp = res.list[idx].main.temp;
+      let tempRound = Math.round(temp);
+      let desc = res.list[idx].weather[0].description;
+      ele.textContent = `${tempRound} degrees`;
+      weatherDescEles[idx].textContent = desc;
+    });
   }
-  xhr.send();
+
+  function onError(xhr, status, errorThrown) {
+    console.log('Error: ' + errorThrown);
+    console.log('Status: ' + status);
+    console.dir(xhr);
+  }
+
 } // end of renderWeather
 
 // renders all the times on the page

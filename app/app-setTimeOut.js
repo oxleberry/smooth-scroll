@@ -1,6 +1,46 @@
 
 // adapted from https://www.youtube.com/watch?v=b0tnynJtm18&t=1273s
 //
+
+function renderTime() {
+  // gets and renders PST
+  const pacificTime = new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"})
+  const pacClock = formattedTime(pacificTime);
+  // gets and renders EST
+  const easternTime = new Date().toLocaleString("en-US", {timeZone: "America/New_York"})
+  const eastClock = formattedTime(easternTime);
+  // gets and renders Hong Kong Time
+  const hkTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Shanghai"})
+  const hkClock = formattedTime(hkTime);
+  // gets and renders Sydney Time
+  const sydTime = new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"})
+  const sydClock = formattedTime(sydTime);
+  // updates the time in the DOM
+  const pacTimeEles = document.querySelectorAll('.pacTime');
+  pacTimeEles.forEach(pacTimeEl => {
+    pacTimeEl.textContent = pacClock;
+  });
+  const eastTimeEle = document.querySelector('.eastTime');
+  eastTimeEle.textContent = eastClock;
+  const hkTimeEle = document.querySelector('.hkTime');
+  hkTimeEle.textContent = hkClock;
+  const sydTimeEle = document.querySelector('.sydTime');
+  sydTimeEle.textContent = sydClock;
+}
+
+formattedTime = (timeStr) => {
+  timeArray = timeStr.split(' ');
+  timeArray[1] = timeArray[1].slice(0, -3);
+  timeArray[2] = timeArray[2].toLowerCase();
+  result = `${timeArray[1]} ${timeArray[2]}`;
+  return result;
+}
+
+// renders all the times on the page
+renderTime();
+
+
+
 const distance = 60;
 const speed = 24;
 // scrollY is a updated Y value, after scroll animation has occured
@@ -17,39 +57,6 @@ let displayHeight = window.innerHeight;
 // check for if scroll animation status
 let animatorID = false;
 
-
-function renderTime() {
-  // renders PST
-  let pacificTime = new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"})
-  // console.log(pacificTime);
-  // formats PST time
-  pacArray = pacificTime.split(' ');
-  pacTime = pacArray[1].slice(0, -3);
-  // console.log(pacTime);
-  // console.log(pacArray[2]);
-  pacArray[2] = pacArray[2].toLowerCase();
-  pacClock = `${pacTime} ${pacArray[2]}`
-  // console.log(pacClock);
-
-  // renders EST
-  let easternTime = new Date().toLocaleString("en-US", {timeZone: "America/New_York"})
-  // formats PST time
-  eastArray = easternTime.split(' ');
-  eastTime = eastArray[1].slice(0, -3);
-  eastArray[2] = eastArray[2].toLowerCase();
-  eastClock = `${eastTime} ${eastArray[2]}`
-
-  // updates the time in the DOM
-  let pacTimeEles = document.querySelectorAll('.pacTime');
-  pacTimeEles.forEach(pacTimeEl => {
-    pacTimeEl.textContent = pacClock;
-  });
-  let eastTimeEle = document.querySelector('.eastTime');
-  eastTimeEle.textContent = eastClock;
-
-}
-
-renderTime();
 
 autoScrollTo = (targetDiv) => {
   renderTime();
