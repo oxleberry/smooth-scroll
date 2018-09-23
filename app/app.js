@@ -9,6 +9,7 @@ const citiesObj = [
     boxClass: 'box1',
     timeClass: 'pacTime',
     timeZone: 'America/Los_Angeles',
+    clock: '',
     weatherId: 5378538
   },
   {
@@ -17,6 +18,7 @@ const citiesObj = [
     boxClass: 'box2',
     timeClass: 'pacTime',
     timeZone: 'America/Los_Angeles',
+    clock: '',
     weatherId: 5391959
   },
   {
@@ -25,6 +27,7 @@ const citiesObj = [
     boxClass: 'box3',
     timeClass: 'pacTime',
     timeZone: 'America/Los_Angeles',
+    clock: '',
     weatherId: 5392171
   },
   {
@@ -33,6 +36,7 @@ const citiesObj = [
     boxClass: 'box4',
     timeClass: 'eastTime',
     timeZone: 'America/New_York',
+    clock: '',
     weatherId: 5125771
   },
   {
@@ -41,6 +45,7 @@ const citiesObj = [
     boxClass: 'box1',
     timeClass: 'hkTime',
     timeZone: 'Asia/Shanghai',
+    clock: '',
     weatherId: 1819729
   },
   {
@@ -49,6 +54,7 @@ const citiesObj = [
     boxClass: 'box4',
     timeClass: 'sydTime',
     timeZone: 'Australia/Sydney',
+    clock: '',
     weatherId: 6619279
   }
 ];
@@ -64,15 +70,19 @@ const citiesObj = [
 //   console.log(city);
 //   console.log(city.name);
 //   let cityTime = new Date().toLocaleString('en-US', {timeZone: city.timeZone});
-//     console.log(cityTime);
+//   console.log(cityTime);
 // }
 
 renderTime = () => {
   const cityTimeEles = document.querySelectorAll('.cityTime');
   cityTimeEles.forEach((cityTimeEl, idx) => {
     let cityTime = new Date().toLocaleString('en-US', {timeZone: citiesObj[idx].timeZone});
-    // console.log(cityTime);
+    console.log(cityTime);
     let cityClock = formattedTime(cityTime);
+    // cityTimeEl.textContent = cityClock;
+    console.log(cityClock);
+    citiesObj[idx].clock = cityClock;
+    console.log(citiesObj);
     cityTimeEl.textContent = cityClock;
   });
 }
@@ -86,23 +96,25 @@ formattedTime = (timeStr) => {
   return result;
 }
 
+function getCityWeatherIds() {
+  let citiesIdString = [];
+  for (let city of citiesObj){
+    let cityWeatherId = city.weatherId;
+    citiesIdString.push(cityWeatherId);
+  }
+  citiesIdString = citiesIdString.join(',');
+  return citiesIdString;
+}
+
 renderWeather = () => {
   // grabs data by one city name
   // let weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?q=';
   // grab data by up to 20 city ids
   const weatherUrl = 'http://api.openweathermap.org/data/2.5/group?id=';
+  const citiesIdString = getCityWeatherIds();
   const units = '&units=imperial&appid=';
   const key = 'SECRET_KEY';
-
-  const oakId = 5378538;
-  const sfId = 5391959;
-  const sjId = 5392171;
-  const nycId = 5125771;
-  const hkId = 1819729;
-  const sydId = 6619279;
-
-  const cities = `${oakId},${sfId},${sjId},${nycId},${hkId},${sydId}`
-  const path = `${weatherUrl}${cities}${units}${key}`;
+  const path = `${weatherUrl}${citiesIdString}${units}${key}`;
 
   // create a XHR object
   const xhr = new XMLHttpRequest();
@@ -132,7 +144,7 @@ renderWeather = () => {
   xhr.send();
 } // end of renderWeather
 
-// renders all the times on the page
+// renders all the times & weather data on the page
 renderTime();
 renderWeather();
 

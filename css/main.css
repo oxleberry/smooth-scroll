@@ -21,13 +21,18 @@ nav ul {
 }
 nav ul li {
   background-color: rgba(255, 255, 255, 0.5);
-  padding: 1.2em 1.4em;
+  padding: 1.1em 0;
   margin: 0 2px 0 0;
+}
+nav ul li:hover {
+  transition: background-color ease 300ms;
+  background-color: rgba(255, 255, 255, 0.7);
 }
 nav ul li a {
   color: #4c5054;
   text-decoration: none;
   font-family: "Lato", sans-serif;
+  padding: 1.1em 1.4em;
 }
 
 /* SECTION STYLES ============================= */
