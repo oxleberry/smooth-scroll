@@ -1,39 +1,80 @@
 
-// version 2 adapted from
-// https://www.youtube.com/watch?v=oUSvlrDTLi4&t=163s
-// easing
-// http://www.gizma.com/easing/
+// version 2 adapted from https://www.youtube.com/watch?v=oUSvlrDTLi4&t=163s
+// easing - http://www.gizma.com/easing/
 
-// to loop through an object
-// for(var i in user){
-//}
+const citiesObj = [
+  {
+    name: 'Oakland',
+    id: 'oak',
+    boxClass: 'box1',
+    timeClass: 'pacTime',
+    timeZone: 'America/Los_Angeles',
+    weatherId: 5378538
+  },
+  {
+    name: 'San Fransicso',
+    id: 'sf',
+    boxClass: 'box2',
+    timeClass: 'pacTime',
+    timeZone: 'America/Los_Angeles',
+    weatherId: 5391959
+  },
+  {
+    name: 'San Jose',
+    id: 'sj',
+    boxClass: 'box3',
+    timeClass: 'pacTime',
+    timeZone: 'America/Los_Angeles',
+    weatherId: 5392171
+  },
+  {
+    name: 'New York',
+    id: 'nyc',
+    boxClass: 'box4',
+    timeClass: 'eastTime',
+    timeZone: 'America/New_York',
+    weatherId: 5125771
+  },
+  {
+    name: 'Hong Kong',
+    id: 'hk',
+    boxClass: 'box1',
+    timeClass: 'hkTime',
+    timeZone: 'Asia/Shanghai',
+    weatherId: 1819729
+  },
+  {
+    name: 'Sydney',
+    id: 'syd',
+    boxClass: 'box4',
+    timeClass: 'sydTime',
+    timeZone: 'Australia/Sydney',
+    weatherId: 6619279
+  }
+];
+
+// 2 ways to loop through an object
+// for (var idx in citiesObj){
+//   console.log(idx);
+//   let cityTime = new Date().toLocaleString('en-US', {timeZone: citiesObj[idx].timeZone});
+//   console.log(cityTime);
+// }
+
+// for (var city of citiesObj){
+//   console.log(city);
+//   console.log(city.name);
+//   let cityTime = new Date().toLocaleString('en-US', {timeZone: city.timeZone});
+//     console.log(cityTime);
+// }
 
 renderTime = () => {
-  // gets and renders PST
-  const pacificTime = new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"})
-  const pacClock = formattedTime(pacificTime);
-  console.log(pacificTime);
-
-  // gets and renders EST
-  const easternTime = new Date().toLocaleString("en-US", {timeZone: "America/New_York"})
-  const eastClock = formattedTime(easternTime);
-  // gets and renders Hong Kong Time
-  const hkTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Shanghai"})
-  const hkClock = formattedTime(hkTime);
-  // gets and renders Sydney Time
-  const sydTime = new Date().toLocaleString("en-US", {timeZone: "Australia/Sydney"})
-  const sydClock = formattedTime(sydTime);
-  // updates the time in the DOM
-  const pacTimeEles = document.querySelectorAll('.pacTime');
-  pacTimeEles.forEach(pacTimeEl => {
-    pacTimeEl.textContent = pacClock;
+  const cityTimeEles = document.querySelectorAll('.cityTime');
+  cityTimeEles.forEach((cityTimeEl, idx) => {
+    let cityTime = new Date().toLocaleString('en-US', {timeZone: citiesObj[idx].timeZone});
+    // console.log(cityTime);
+    let cityClock = formattedTime(cityTime);
+    cityTimeEl.textContent = cityClock;
   });
-  const eastTimeEle = document.querySelector('.eastTime');
-  eastTimeEle.textContent = eastClock;
-  const hkTimeEle = document.querySelector('.hkTime');
-  hkTimeEle.textContent = hkClock;
-  const sydTimeEle = document.querySelector('.sydTime');
-  sydTimeEle.textContent = sydClock;
 }
 
 formattedTime = (timeStr) => {
@@ -51,7 +92,7 @@ renderWeather = () => {
   // grab data by up to 20 city ids
   const weatherUrl = 'http://api.openweathermap.org/data/2.5/group?id=';
   const units = '&units=imperial&appid=';
-  const key = 'e1d85f466cbdf227085ec76920be7513';
+  const key = 'SECRET_KEY';
 
   const oakId = 5378538;
   const sfId = 5391959;
@@ -67,11 +108,10 @@ renderWeather = () => {
   const xhr = new XMLHttpRequest();
   // OPEN - type, url/file, async
   xhr.open('GET', path, true);
-
   xhr.onload = function(){
     if (xhr.status >= 200 && xhr.status < 300) {
       // console.log(xhr.responseText);
-      // formats to JSON structure
+      // formats from XML to JSON structure
       const res = JSON.parse(xhr.responseText);
       // console.log(res);
       // loops through weather data and renders the output
@@ -99,55 +139,25 @@ renderWeather();
 smoothScroll = (target, duration) => {
   // tracks the current Y position in pixels
   let currentY = window.pageYOffset;
-  // console.log(currentY);
-  console.log('TARGET !!!');
-  console.log(target);
-  console.log(typeof target);
   // tracks the target Y positiom in pixels
   target = document.getElementById(target);
-  console.log('target');
-  console.log(target);
-  console.log(typeof target);
   let targetYPos = target.offsetTop;
-  console.log('targetYPos');
-  console.log(targetYPos);
-  // same as .offsetTop
-  // let targetYPos2 = target.getBoundingClientRect().top;
-  // console.log(targetYPos2);
-
-  // getBoundingClientRect will also get info like .width, .height, .left ...
-  // let targetYPos3 = target.getBoundingClientRect();
-  // console.log(targetYPos3);
-
   // tracks the remaining distance from target in pixels
   let distance = targetYPos - currentY;
-  console.log('distance');
-  console.log(distance);
-
   // track the time, for use with request animation
   let start = null;
 
   function animation(timestamp){
     // timestamp part of reqAF to keep track of animation time
     if (!start) start = timestamp;
-    // console.log('performance now');
-    // console.log(performance.now());
-    console.log('timestamp');
-    console.log(timestamp);
     // tracks the time elapsed
     let timeElapsed = timestamp - start;
-    console.log('timeElapsed');
-    console.log(timeElapsed);
-
     // run, calculates how to reach targetY in an ease trajectory
     // 1) value of current time in the animation
     // 2) currentY position in pixel
     // 3) how far we need to go till we reach targetY in pixels
     // 4) target end time of animation
     let run = ease(timeElapsed, currentY, distance, duration)
-    console.log('run');
-    console.log(run);
-
     // scrollTo, first argument scrolls on the x axis
     // scrollTo, second argument scrolls on the y axis
     // animates till we reach the duration time
@@ -156,13 +166,12 @@ smoothScroll = (target, duration) => {
       requestAnimationFrame(animation);
     }
     else {
-      console.log("CANCEL");
       cancelAnimationFrame(animationID);
     }
   } // end of animation function
   // recursively renders the animation function
   let animationID = requestAnimationFrame(animation);
-}
+} // end of smoothScroll function
 
 // cubic easing in/out
 ease = (t, b, c, d) => {
@@ -180,9 +189,6 @@ scrollLinks.forEach(scrollLink => {
     // renderWeather();
     e.preventDefault();
     let scrollTarget = scrollLink.dataset.scroll;
-    console.log('scrollTarget');
-    console.log(scrollTarget);
-    console.log(typeof scrollTarget);
     smoothScroll(scrollTarget, 1500);
   });
 });
