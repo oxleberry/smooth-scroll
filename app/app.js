@@ -2,71 +2,71 @@
 // version 2 adapted from https://www.youtube.com/watch?v=oUSvlrDTLi4&t=163s
 // easing - http://www.gizma.com/easing/
 
-const citiesObj = [
-  {
-    name: 'Oakland',
-    id: 'oak',
-    boxClass: 'box1',
-    timeClass: 'pacTime',
-    timeZone: 'America/Los_Angeles',
-    clock: '',
-    weatherId: 5378538
-  },
-  {
-    name: 'San Fransicso',
-    id: 'sf',
-    boxClass: 'box2',
-    timeClass: 'pacTime',
-    timeZone: 'America/Los_Angeles',
-    clock: '',
-    weatherId: 5391959
-  },
-  {
-    name: 'San Jose',
-    id: 'sj',
-    boxClass: 'box3',
-    timeClass: 'pacTime',
-    timeZone: 'America/Los_Angeles',
-    clock: '',
-    weatherId: 5392171
-  },
-  {
-    name: 'New York',
-    id: 'nyc',
-    boxClass: 'box4',
-    timeClass: 'eastTime',
-    timeZone: 'America/New_York',
-    clock: '',
-    weatherId: 5125771
-  },
-  {
-    name: 'Hong Kong',
-    id: 'hk',
-    boxClass: 'box1',
-    timeClass: 'hkTime',
-    timeZone: 'Asia/Shanghai',
-    clock: '',
-    weatherId: 1819729
-  },
-  {
-    name: 'Sydney',
-    id: 'syd',
-    boxClass: 'box4',
-    timeClass: 'sydTime',
-    timeZone: 'Australia/Sydney',
-    clock: '',
-    weatherId: 6619279
-  }
-];
+// const citiesList = [
+//   {
+//     name: 'Oakland',
+//     id: 'oak',
+//     boxClass: 'box1',
+//     timeClass: 'pacTime',
+//     timeZone: 'America/Los_Angeles',
+//     clock: '',
+//     weatherId: 5378538
+//   },
+//   {
+//     name: 'San Fransicso',
+//     id: 'sf',
+//     boxClass: 'box2',
+//     timeClass: 'pacTime',
+//     timeZone: 'America/Los_Angeles',
+//     clock: '',
+//     weatherId: 5391959
+//   },
+//   {
+//     name: 'San Jose',
+//     id: 'sj',
+//     boxClass: 'box3',
+//     timeClass: 'pacTime',
+//     timeZone: 'America/Los_Angeles',
+//     clock: '',
+//     weatherId: 5392171
+//   },
+//   {
+//     name: 'New York',
+//     id: 'nyc',
+//     boxClass: 'box4',
+//     timeClass: 'eastTime',
+//     timeZone: 'America/New_York',
+//     clock: '',
+//     weatherId: 5125771
+//   },
+//   {
+//     name: 'Hong Kong',
+//     id: 'hk',
+//     boxClass: 'box1',
+//     timeClass: 'hkTime',
+//     timeZone: 'Asia/Shanghai',
+//     clock: '',
+//     weatherId: 1819729
+//   },
+//   {
+//     name: 'Sydney',
+//     id: 'syd',
+//     boxClass: 'box4',
+//     timeClass: 'sydTime',
+//     timeZone: 'Australia/Sydney',
+//     clock: '',
+//     weatherId: 6619279
+//   }
+// ];
 
 // 2 ways to loop through an object
-// for (var idx in citiesObj){
+// for (var idx in citiesList){
 //   console.log(idx);
-//   let cityTime = new Date().toLocaleString('en-US', {timeZone: citiesObj[idx].timeZone});
+//   let cityTime = new Date().toLocaleString('en-US', {timeZone: citiesList[idx].timeZone});
 //   console.log(cityTime);
 // }
 
-// for (var city of citiesObj){
+// for (var city of citiesList){
 //   console.log(city);
 //   console.log(city.name);
 //   let cityTime = new Date().toLocaleString('en-US', {timeZone: city.timeZone});
@@ -76,16 +76,36 @@ const citiesObj = [
 renderTime = () => {
   const cityTimeEles = document.querySelectorAll('.cityTime');
   cityTimeEles.forEach((cityTimeEl, idx) => {
-    let cityTime = new Date().toLocaleString('en-US', {timeZone: citiesObj[idx].timeZone});
-    console.log(cityTime);
+    let cityTime = new Date().toLocaleString('en-US', {timeZone: citiesList[idx].timeZone});
+
+    // console.log(cityTime);
     let cityClock = formattedTime(cityTime);
     // cityTimeEl.textContent = cityClock;
-    console.log(cityClock);
-    citiesObj[idx].clock = cityClock;
-    console.log(citiesObj);
-    cityTimeEl.textContent = cityClock;
+    // console.log(cityClock);
+
+    let cityDay = formattedDay(cityTime);
+
+    citiesList[idx].clock = cityClock;
+    // console.log(citiesList);
+    // cityTimeEl.textContent = cityClock;
+    cityTimeEl.innerHTML = `${cityClock}<br />${cityDay}`;
   });
 }
+
+// other ways to work with DATE
+// var date = new Date("9/23/2018")
+// console.log(typeof date);
+// var date2 = date.toString();
+// console.log(typeof date2);
+// console.log(date2);
+// var date3 = date.toUTCString();
+// console.log(typeof date3);
+// console.log(date3);
+// var date4 = date.toDateString();
+// console.log(date4);
+// var date5 = date.getDay();
+// console.log(date5);
+
 
 formattedTime = (timeStr) => {
   timeArray = timeStr.split(' ');
@@ -96,9 +116,25 @@ formattedTime = (timeStr) => {
   return result;
 }
 
+formattedDay = (timeStr) => {
+  timeArray = timeStr.split(' ');
+  const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  // formatting to get the DAY of the week
+  // var date = new Date("9/23/2018")
+  // var day = date.getDay();
+  // console.log(day);
+  let dateString = timeArray[0].slice(0, -1);
+  // console.log(dateString);
+  let date = new Date(dateString)
+  let cityDay = date.getDay();
+  cityDay = weekday[cityDay];
+  // console.log(cityDay);
+  return cityDay;
+}
+
 function getCityWeatherIds() {
   let citiesIdString = [];
-  for (let city of citiesObj){
+  for (let city of citiesList){
     let cityWeatherId = city.weatherId;
     citiesIdString.push(cityWeatherId);
   }
@@ -129,6 +165,7 @@ renderWeather = () => {
       // loops through weather data and renders the output
       const weatherDegEles = document.querySelectorAll('.weatherDeg');
       const weatherDescEles = document.querySelectorAll('.weatherDesc');
+      // const xEle = document.querySelector('.x');
       weatherDegEles.forEach((ele, idx) => {
         let temp = res.list[idx].main.temp;
         let tempRound = Math.round(temp);
@@ -136,6 +173,7 @@ renderWeather = () => {
         ele.textContent = `${tempRound} degrees`;
         weatherDescEles[idx].textContent = desc;
       });
+
     } else {
       console.log('request has failed');
       console.log(xhr.status);
@@ -144,9 +182,39 @@ renderWeather = () => {
   xhr.send();
 } // end of renderWeather
 
+function newSection() {
+  const mainEle = document.querySelector('main');
+  let sectionEle = document.createElement('section');
+  sectionEle.setAttribute('id', citiesList[0].id);
+  sectionEle.setAttribute('class', `contentBox ${citiesList[0].boxClass}`);
+
+  let pTimeEle = document.createElement('p');
+  pTimeEle.setAttribute('class', 'cityTime');
+  pTimeEle.textContent = `${citiesList[0].clock}`;
+
+  let h2Ele = document.createElement('h2');
+  h2Ele.textContent = `${citiesList[0].name}`;
+
+  let pWthrDegEle = document.createElement('p');
+  pWthrDegEle.setAttribute('class', 'weatherDeg');
+
+  let pWthrDescEle = document.createElement('p');
+  pWthrDescEle.setAttribute('class', 'weatherDesc');
+
+  sectionEle.appendChild(pTimeEle);
+  sectionEle.appendChild(h2Ele);
+  sectionEle.appendChild(pWthrDegEle);
+  sectionEle.appendChild(pWthrDescEle);
+  // sectionTags.appendChild(h2Ele);
+  mainEle.appendChild(sectionEle);
+}
+
+newSection();
+
 // renders all the times & weather data on the page
 renderTime();
 renderWeather();
+
 
 smoothScroll = (target, duration) => {
   // tracks the current Y position in pixels
