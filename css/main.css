@@ -5,6 +5,7 @@
 body {
   margin: 0;
   padding: 0;
+  overflow-y: hidden;
 }
 
 /* NAV STYLES ============================= */
@@ -12,30 +13,40 @@ nav {
   position: fixed;
 }
 nav ul {
-  display: flex;
   margin: 0;
   padding: 0;
   width: 100vw;
-  background-color: rgba(56, 55, 62, 0.7);
+  background-color: rgba(56, 55, 62, 0.8);
   list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-gap: 3px;
 }
-nav ul li {
-  background-color: rgba(255, 255, 255, 0.5);
-  padding: 1.1em 0;
-  margin: 0 2px 0 0;
-}
-nav ul li:hover {
-  transition: background-color ease 300ms;
-  background-color: rgba(255, 255, 255, 0.7);
-}
-nav ul li a {
+nav ul a {
   color: #4c5054;
   text-decoration: none;
   font-family: "Lato", sans-serif;
-  padding: 1.1em 1.4em;
+}
+nav ul a li {
+  color: #4c5054;
+  text-decoration: none;
+  font-family: "Lato", sans-serif;
+  background-color: rgba(255, 255, 255, 0.5);
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+nav ul a li:hover {
+  transition: background-color ease 300ms;
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 /* SECTION STYLES ============================= */
+main {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
 main .contentBox {
   width: 100%;
   height: 100vh;
@@ -43,6 +54,7 @@ main .contentBox {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-top: 50px;
 }
 main .contentBox h2 {
   font-size: 5em;
@@ -68,6 +80,76 @@ main .contentBox.box3 {
 }
 main .contentBox.box4 {
   background-color: #ccbede;
+}
+
+@media (max-width: 550px) and (min-width: 400px) {
+  nav ul {
+    grid-template-columns: repeat(auto-fit, minmax(102px, 1fr));
+  }
+
+  main .contentBox {
+    padding-top: 120px;
+  }
+  main .contentBox h2 {
+    font-size: 3.2em;
+  }
+  main .contentBox p {
+    font-size: 2em;
+  }
+}
+@media screen and (max-width: 400px) {
+  nav ul {
+    grid-template-columns: repeat(auto-fit, minmax(102px, 1fr));
+  }
+
+  main .contentBox {
+    padding-top: 114px;
+  }
+  main .contentBox h2 {
+    font-size: 2.5em;
+    margin: 0.4em 0;
+  }
+  main .contentBox p {
+    font-size: 1.9em;
+  }
+}
+
+/* for larger mobile screens in landscape mode */
+@media screen and (max-width: 800px) and (min-width: 650px) and (orientation: landscape) {
+
+  nav ul a li {
+    height: 35px;
+  }
+
+  main .contentBox {
+    padding-top: 72px;
+  }
+  main .contentBox h2 {
+    font-size: 3.3em;
+    margin: 0.1em 0;
+  }
+  main .contentBox p {
+    font-size: 2em;
+  }
+}
+
+/* for the smallest mobile screen in landscape mode */
+@media screen and (max-width: 650px) and (orientation: landscape) {
+
+  nav ul a li {
+    height: 35px;
+  }
+
+  main .contentBox {
+    padding-top: 70px;
+  }
+  main .contentBox h2 {
+    font-size: 2.1em;
+    margin: 0.1em 0;
+  }
+  main .contentBox p {
+    font-size: 1.4em;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */

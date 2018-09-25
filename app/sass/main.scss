@@ -1,6 +1,8 @@
 
 // $ sass --watch app/sass:css
 
+$nav-offset: 50px;
+
 * {
   box-sizing: border-box;
 }
@@ -8,7 +10,7 @@
 body {
   margin: 0;
   padding: 0;
-  // font-family: 'Raleway', sans-serif;
+  overflow-y: hidden;
 }
 
 /* NAV STYLES ============================= */
@@ -16,25 +18,31 @@ body {
 nav {
   position: fixed;
   ul {
-    display: flex;
     margin: 0;
     padding: 0;
     width: 100vw;
-    background-color: rgba(56, 55, 62, .7);
+    background-color: rgba(56, 55, 62, 0.8);
     list-style: none;
-    li {
-      background-color: rgba(255, 255, 255, .5);
-      padding: 1.1em 0;
-      margin: 0 2px 0 0;
-      &:hover {
-        transition: background-color ease 300ms;
-        background-color: rgba(255, 255, 255, 0.7);
-      }
-      a {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-gap: 3px;
+    a {
+      color: #4c5054;
+      text-decoration: none;
+      font-family: 'Lato', sans-serif;
+      li {
         color: #4c5054;
         text-decoration: none;
         font-family: 'Lato', sans-serif;
-        padding: 1.1em 1.4em;
+        background-color: rgba(255, 255, 255, 0.5);
+        height: $nav-offset;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:hover {
+          transition: background-color ease 300ms;
+          background-color: rgba(255, 255, 255, 0.7);
+        }
       }
     }
   }
@@ -43,6 +51,8 @@ nav {
 /* SECTION STYLES ============================= */
 
 main {
+  overflow-x: hidden;
+  overflow-y: hidden;
   .contentBox {
     width: 100%;
     height: 100vh;
@@ -50,6 +60,7 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-top: $nav-offset;
     h2 {
       font-size: 5em;
       font-family: 'Bungee Shade', sans-serif;
@@ -62,8 +73,6 @@ main {
       font-weight: 300;
       font-family: 'Roboto Condensed', sans-serif;
       text-align: center;
-      // text-transform: uppercase;
-      // line-height: 1.5em;
     }
     &.box1 {
       background-color: #c8e486;
@@ -77,6 +86,83 @@ main {
     &.box4 {
       background-color: #ccbede;
     }
-
   }
 } // end of main
+
+@media (max-width: 550px) and (min-width: 400px) {
+  nav {
+    ul {
+      grid-template-columns: repeat(auto-fit, minmax(102px, 1fr));
+    }
+  } // end of nav
+  main {
+    .contentBox {
+      padding-top: 120px;
+      h2 {
+        font-size: 3.2em;
+      }
+      p {
+        font-size: 2em;
+      }
+    }
+  } // end of main
+}
+
+@media screen and (max-width: 400px){
+  nav {
+    ul {
+      grid-template-columns: repeat(auto-fit, minmax(102px, 1fr));
+    }
+  } // end of nav
+  main {
+    .contentBox {
+      padding-top: 134px;
+      h2 {
+        font-size: 2.4em;
+        margin: 0.4em 0;
+      }
+      p {
+        font-size: 1.8em;
+      }
+    }
+  } // end of main
+}
+
+// have to insert this portion manually into CSS file... don't know why
+// /* for larger mobile screens in landscape mode */
+// @media screen and (max-width: 800px) and (min-width: 650px) and (orientation: landscape) {
+//
+//   nav ul a li {
+//     height: 35px;
+//   }
+//
+//   main .contentBox {
+//     padding-top: 72px;
+//   }
+//   main .contentBox h2 {
+//     font-size: 3.3em;
+//     margin: 0.1em 0;
+//   }
+//   main .contentBox p {
+//     font-size: 2em;
+//   }
+// }
+//
+// /* for the smallest mobile screen in landscape mode */
+// @media screen and (max-width: 650px) and (orientation: landscape) {
+//
+//   nav ul a li {
+//     height: 35px;
+//   }
+//
+//   main .contentBox {
+//     padding-top: 70px;
+//   }
+//   main .contentBox h2 {
+//     font-size: 2.1em;
+//     margin: 0.1em 0;
+//   }
+//   main .contentBox p {
+//     font-size: 1.4em;
+//   }
+// }

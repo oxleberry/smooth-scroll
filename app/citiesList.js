@@ -4,7 +4,6 @@ const citiesList = [
     name: 'Oakland',
     id: 'oak',
     boxClass: 'box1',
-    timeClass: 'pacTime',
     timeZone: 'America/Los_Angeles',
     clock: '',
     weatherId: 5378538
@@ -13,7 +12,6 @@ const citiesList = [
     name: 'San Fransicso',
     id: 'sf',
     boxClass: 'box2',
-    timeClass: 'pacTime',
     timeZone: 'America/Los_Angeles',
     clock: '',
     weatherId: 5391959
@@ -22,7 +20,6 @@ const citiesList = [
     name: 'San Jose',
     id: 'sj',
     boxClass: 'box3',
-    timeClass: 'pacTime',
     timeZone: 'America/Los_Angeles',
     clock: '',
     weatherId: 5392171
@@ -31,50 +28,55 @@ const citiesList = [
     name: 'New York',
     id: 'nyc',
     boxClass: 'box4',
-    timeClass: 'eastTime',
     timeZone: 'America/New_York',
     clock: '',
     weatherId: 5125771
   },
   {
+    name: 'London',
+    id: 'lon',
+    boxClass: 'box2',
+    timeZone: 'Europe/London',
+    clock: '',
+    weatherId: 2643743
+  },
+  {
     name: 'Hong Kong',
     id: 'hk',
-    boxClass: 'box2',
-    timeClass: 'hkTime',
+    boxClass: 'box4',
     timeZone: 'Asia/Shanghai',
     clock: '',
     weatherId: 1819729
   },
   {
+    name: 'Mexico City',
+    id: 'mex',
+    boxClass: 'box1',
+    timeZone: 'America/Mexico_City',
+    clock: '',
+    weatherId: 3530597
+  },
+  {
     name: 'Sydney',
     id: 'syd',
-    boxClass: 'box4',
-    timeClass: 'sydTime',
+    boxClass: 'box3',
     timeZone: 'Australia/Sydney',
     clock: '',
     weatherId: 6619279
   }
-  // {
-  //   name: 'Mexico City',
-  //   id: 'mex',
-  //   boxClass: 'box1',
-  //   timeClass: 'mexTime',
-  //   timeZone: 'America/Mexico_City',
-  //   clock: '',
-  //   weatherId: 3530597
-  // },
 ];
 
 
+const SECRET_KEY = 'e1d85f466cbdf227085ec76920be7513';
 
 // 2 ways to loop through an object
-// for (var idx in citiesObj){
+// for (var idx in citiesList){
 //   console.log(idx);
-//   let cityTime = new Date().toLocaleString('en-US', {timeZone: citiesObj[idx].timeZone});
+//   let cityTime = new Date().toLocaleString('en-US', {timeZone: citiesList[idx].timeZone});
 //   console.log(cityTime);
 // }
 
-// for (var city of citiesObj){
+// for (var city of citiesList){
 //   console.log(city);
 //   console.log(city.name);
 //   let cityTime = new Date().toLocaleString('en-US', {timeZone: city.timeZone});

@@ -1,93 +1,12 @@
 
-// version 2 adapted from https://www.youtube.com/watch?v=oUSvlrDTLi4&t=163s
-// easing - http://www.gizma.com/easing/
-
-// const citiesList = [
-//   {
-//     name: 'Oakland',
-//     id: 'oak',
-//     boxClass: 'box1',
-//     timeClass: 'pacTime',
-//     timeZone: 'America/Los_Angeles',
-//     clock: '',
-//     weatherId: 5378538
-//   },
-//   {
-//     name: 'San Fransicso',
-//     id: 'sf',
-//     boxClass: 'box2',
-//     timeClass: 'pacTime',
-//     timeZone: 'America/Los_Angeles',
-//     clock: '',
-//     weatherId: 5391959
-//   },
-//   {
-//     name: 'San Jose',
-//     id: 'sj',
-//     boxClass: 'box3',
-//     timeClass: 'pacTime',
-//     timeZone: 'America/Los_Angeles',
-//     clock: '',
-//     weatherId: 5392171
-//   },
-//   {
-//     name: 'New York',
-//     id: 'nyc',
-//     boxClass: 'box4',
-//     timeClass: 'eastTime',
-//     timeZone: 'America/New_York',
-//     clock: '',
-//     weatherId: 5125771
-//   },
-//   {
-//     name: 'Hong Kong',
-//     id: 'hk',
-//     boxClass: 'box1',
-//     timeClass: 'hkTime',
-//     timeZone: 'Asia/Shanghai',
-//     clock: '',
-//     weatherId: 1819729
-//   },
-//   {
-//     name: 'Sydney',
-//     id: 'syd',
-//     boxClass: 'box4',
-//     timeClass: 'sydTime',
-//     timeZone: 'Australia/Sydney',
-//     clock: '',
-//     weatherId: 6619279
-//   }
-// ];
-
-// 2 ways to loop through an object
-// for (var idx in citiesList){
-//   console.log(idx);
-//   let cityTime = new Date().toLocaleString('en-US', {timeZone: citiesList[idx].timeZone});
-//   console.log(cityTime);
-// }
-
-// for (var city of citiesList){
-//   console.log(city);
-//   console.log(city.name);
-//   let cityTime = new Date().toLocaleString('en-US', {timeZone: city.timeZone});
-//   console.log(cityTime);
-// }
-
 renderTime = () => {
   const cityTimeEles = document.querySelectorAll('.cityTime');
   cityTimeEles.forEach((cityTimeEl, idx) => {
     let cityTime = new Date().toLocaleString('en-US', {timeZone: citiesList[idx].timeZone});
-
     // console.log(cityTime);
     let cityClock = formattedTime(cityTime);
-    // cityTimeEl.textContent = cityClock;
-    // console.log(cityClock);
-
     let cityDay = formattedDay(cityTime);
-
     citiesList[idx].clock = cityClock;
-    // console.log(citiesList);
-    // cityTimeEl.textContent = cityClock;
     cityTimeEl.innerHTML = `${cityClock}<br />${cityDay}`;
   });
 }
@@ -106,7 +25,6 @@ renderTime = () => {
 // var date5 = date.getDay();
 // console.log(date5);
 
-
 formattedTime = (timeStr) => {
   timeArray = timeStr.split(' ');
   // timeArray[0] = timeArray[0].slice(0, -6);
@@ -124,14 +42,13 @@ formattedDay = (timeStr) => {
   // var day = date.getDay();
   // console.log(day);
   let dateString = timeArray[0].slice(0, -1);
-  // console.log(dateString);
   let date = new Date(dateString)
   let cityDay = date.getDay();
   cityDay = weekday[cityDay];
-  // console.log(cityDay);
   return cityDay;
 }
 
+// grouping weather ID from citiesList for use with API
 function getCityWeatherIds() {
   let citiesIdString = [];
   for (let city of citiesList){
@@ -149,7 +66,7 @@ renderWeather = () => {
   const weatherUrl = 'http://api.openweathermap.org/data/2.5/group?id=';
   const citiesIdString = getCityWeatherIds();
   const units = '&units=imperial&appid=';
-  const key = 'SECRET_KEY';
+  const key = SECRET_KEY;
   const path = `${weatherUrl}${citiesIdString}${units}${key}`;
 
   // create a XHR object
@@ -173,7 +90,6 @@ renderWeather = () => {
         ele.textContent = `${tempRound} degrees`;
         weatherDescEles[idx].textContent = desc;
       });
-
     } else {
       console.log('request has failed');
       console.log(xhr.status);
@@ -182,40 +98,43 @@ renderWeather = () => {
   xhr.send();
 } // end of renderWeather
 
-function newSection() {
-  const mainEle = document.querySelector('main');
-  let sectionEle = document.createElement('section');
-  sectionEle.setAttribute('id', citiesList[0].id);
-  sectionEle.setAttribute('class', `contentBox ${citiesList[0].boxClass}`);
+function renderSectionStructure() {
+  for (var idx in citiesList){
+    // console.log(idx);
+    const mainEle = document.querySelector('main');
+    let sectionEle = document.createElement('section');
+    sectionEle.setAttribute('id', citiesList[idx].id);
+    sectionEle.setAttribute('class', `contentBox ${citiesList[idx].boxClass}`);
 
-  let pTimeEle = document.createElement('p');
-  pTimeEle.setAttribute('class', 'cityTime');
-  pTimeEle.textContent = `${citiesList[0].clock}`;
+    let pTimeEle = document.createElement('p');
+    pTimeEle.setAttribute('class', 'cityTime');
+    // pTimeEle.textContent = `${citiesList[idx].clock}`;
 
-  let h2Ele = document.createElement('h2');
-  h2Ele.textContent = `${citiesList[0].name}`;
+    let h2Ele = document.createElement('h2');
+    h2Ele.textContent = `${citiesList[idx].name}`;
 
-  let pWthrDegEle = document.createElement('p');
-  pWthrDegEle.setAttribute('class', 'weatherDeg');
+    let pWthrDegEle = document.createElement('p');
+    pWthrDegEle.setAttribute('class', 'weatherDeg');
 
-  let pWthrDescEle = document.createElement('p');
-  pWthrDescEle.setAttribute('class', 'weatherDesc');
+    let pWthrDescEle = document.createElement('p');
+    pWthrDescEle.setAttribute('class', 'weatherDesc');
 
-  sectionEle.appendChild(pTimeEle);
-  sectionEle.appendChild(h2Ele);
-  sectionEle.appendChild(pWthrDegEle);
-  sectionEle.appendChild(pWthrDescEle);
-  // sectionTags.appendChild(h2Ele);
-  mainEle.appendChild(sectionEle);
-}
+    // renderSectionStructure template
+    // <section id="oak" class='contentBox box1'>
+    //   <p class="cityTime"></p>
+    //   <h2>oakland</h2>
+    //   <p class="weatherDeg"></p>
+    //   <p class="weatherDesc"></p>
+    // </section>
+    sectionEle.appendChild(pTimeEle);
+    sectionEle.appendChild(h2Ele);
+    sectionEle.appendChild(pWthrDegEle);
+    sectionEle.appendChild(pWthrDescEle);
+    mainEle.appendChild(sectionEle);
+  }
+} // end of renderSectionStructure
 
-newSection();
-
-// renders all the times & weather data on the page
-renderTime();
-renderWeather();
-
-
+// version 2 adapted from https://www.youtube.com/watch?v=oUSvlrDTLi4&t=163s
 smoothScroll = (target, duration) => {
   // tracks the current Y position in pixels
   let currentY = window.pageYOffset;
@@ -253,6 +172,7 @@ smoothScroll = (target, duration) => {
   let animationID = requestAnimationFrame(animation);
 } // end of smoothScroll function
 
+// easing - http://www.gizma.com/easing/
 // cubic easing in/out
 ease = (t, b, c, d) => {
   t /= d/2;
@@ -260,6 +180,15 @@ ease = (t, b, c, d) => {
   t -= 2;
   return c/2*(t*t*t + 2) + b;
 };
+
+// toggle isActive in navbar link
+
+// Page Load ACTIONS ===================================/
+// renders section template
+renderSectionStructure();
+// renders all the times & weather data on the page
+renderTime();
+renderWeather();
 
 // SMOOTH SCROLL EVENT HANDLERS
 const scrollLinks = document.querySelectorAll(".scrollLink");

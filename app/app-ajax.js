@@ -46,7 +46,7 @@ renderWeather = () => {
   // grab data by up to 20 city ids
   const weatherUrl = 'http://api.openweathermap.org/data/2.5/group?id=';
   const units = '&units=imperial&appid=';
-  const key = 'SECRET_KEY';
+  const key = SECRET_KEY;
 
   const oakId = 5378538;
   const sfId = 5391959;
