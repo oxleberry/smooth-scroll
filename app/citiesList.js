@@ -22,7 +22,8 @@ const citiesList = [
     boxClass: 'box3',
     timeZone: 'America/Los_Angeles',
     clock: '',
-    weatherId: 5392171
+    weatherId: 5397777
+    // weatherId: 5392171    
   },
   {
     name: 'New York',
@@ -39,6 +40,14 @@ const citiesList = [
     timeZone: 'Europe/London',
     clock: '',
     weatherId: 2643743
+  },
+  {
+    name: 'Michigan',
+    id: 'mic',
+    boxClass: 'box3',
+    timeZone: 'America/New_York',
+    clock: '',
+    weatherId: 5011908
   },
   {
     name: 'Hong Kong',
